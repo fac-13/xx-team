@@ -29,7 +29,15 @@ const loginHandler = (request, response) => {
 };
 
 const signupHandler = (request, response) => {
-  console.log('SIGNUP URL', request.url);
+    let data = '';
+    request.on('data', function (chunk) {
+        data += chunk;
+    });
+    request.on('end', () => {
+        const registerData = querystring.parse(data);
+        const email = registerData.email;
+        const password = registerData.password;
+    });
 };
 
 const logoutHandler = (request, response) => {
