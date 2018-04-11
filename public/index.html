@@ -7,7 +7,7 @@
     <title>Document</title>
   </head>
   <body>
-    <dialog id="signup" role="dialog" open>
+    <dialog id="signup" role="dialog">
       <form id="signup-form">
         <label for="email">Email:</label>
         <input id="email" name="email" required/>
@@ -18,5 +18,15 @@
         <button type="button" id="signup-btn">Sign Up!</button>
       </form>
     </dialog>
+    <dialog id="login" role="dialog" open>
+      <form id="login-form">
+        <label for="login-email">Email:</label>
+        <input id="login-email" name="email" required/>
+        <label for="login-password">Password:</label>
+        <input id="login-password" name="password" required />
+        <button type="button" id="login-btn">Log in</button>
+      </form>
+      <button id="new-user">Click to Sign up!</button>
+      </dialog>
   </body>
 </html>
