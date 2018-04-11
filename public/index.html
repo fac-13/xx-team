@@ -7,18 +7,18 @@
     <title>Document</title>
   </head>
   <body>
-    <dialog id="signup" role="dialog">
-      <form id="signup-form">
+    <dialog id="signup" role="dialog" open>
+      <form id="signup-form" action='/signup' method='post'>
         <label for="email">Email:</label>
         <input id="email" name="email" required/>
         <label for="password">Password:</label>
         <input id="password" name="password" required />
         <label for="cofirm-password">Confirm Password:</label>
         <input id="confirm-password" name="confirm-password" required />
-        <button type="button" id="signup-btn">Sign Up!</button>
+        <input type="submit" id="signup-btn">Sign Up!</button>
       </form>
     </dialog>
-    <dialog id="login" role="dialog" open>
+    <dialog id="login" role="dialog">
       <form id="login-form">
         <label for="login-email">Email:</label>
         <input id="login-email" name="email" required/>
