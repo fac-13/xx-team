@@ -1,0 +1,28 @@
+{
+  "name": "xx-team",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "nodemon": "nodemon ./src/server.js",
+    "start": "node ./src//server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fac-13/xx-team.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fac-13/xx-team/issues"
+  },
+  "homepage": "https://github.com/fac-13/xx-team#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie": "^0.3.1",
+    "env2": "^2.2.0",
+    "jsonwebtoken": "^8.2.1",
+    "pg": "^7.4.1"
+  }
+}
