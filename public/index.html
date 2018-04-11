@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./style.css">
     <title>Document</title>
   </head>
   <body>
+    <div id="overlay"></div>
     <dialog id="signup" role="dialog">
       <form id="signup-form">
         <label for="email">Email:</label>
         <input id="email" name="email" required/>
         <label for="password">Password:</label>
-        <input id="password" name="password" required />
-        <label for="cofirm-password">Confirm Password:</label>
-        <input id="confirm-password" name="confirm-password" required />
-        <button type="button" id="signup-btn">Sign Up!</button>
+        <input id="password" name="password" type="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Password must contain 1 uppercase letter, a number or special character and be at least 8 characters long" required/>
+        <label for="confirm-password">Confirm Password:</label>
+        <input id="confirm-password" name="confirm-password" type="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$" required />
+        <button  id="signup-btn">Sign Up!</button>
       </form>
     </dialog>
     <dialog id="login" role="dialog" open>
@@ -23,10 +25,11 @@
         <label for="login-email">Email:</label>
         <input id="login-email" name="email" required/>
         <label for="login-password">Password:</label>
-        <input id="login-password" name="password" required />
+        <input id="login-password" name="password" type="password" required/>
         <button type="button" id="login-btn">Log in</button>
       </form>
       <button id="new-user">Click to Sign up!</button>
       </dialog>
+      <script src="./dom.js"></script>
   </body>
 </html>
