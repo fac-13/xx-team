@@ -1,7 +1,10 @@
 const fs = require('fs');
 const path = require('path');
+require('env2')('./config.env');
 const querystring = require('querystring');
 const { getAllPosts } = require('./queries/getalldata');
+const { signup } = require('./queries/signup');
+const secret = process.env.SECRET;
 
 const staticHandler = (response, filepath) => {
   const extension = filepath.split('.')[1];
@@ -37,6 +40,11 @@ const signupHandler = (request, response) => {
         const registerData = querystring.parse(data);
         const email = registerData.email;
         const password = registerData.password;
+        signup(email, password, (err, res) => {
+            if(err){
+                console.log(err);
+            }
+        });
     });
 };
 
