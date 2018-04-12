@@ -42,7 +42,12 @@ const signupHandler = (request, response) => {
         const password = registerData.password;
         signup(email, password, (err, res) => {
             if(err){
-                console.log(err);
+                response.writeHead(500, { 'content-type': 'text/html' });
+                response.end('<h1>Failed to sign the user, try again</h1>');
+            }else{
+                const numUsers = res;
+                response.writeHead(200, { 'content-type': 'text/html' });
+                response.end(`<h1>Registered ${numUsers} new users.</h1>`);
             }
         });
     });

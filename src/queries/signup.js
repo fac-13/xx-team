@@ -1,22 +1,24 @@
 const dbConnection = require('../database/db_connection.js');
 const bcrypt = require('bcryptjs');
 
+
+
+
 const signup = (email, password, cb) => {
-    console.log('talking from sign up', email, password);
-    
        bcrypt.genSalt(10, (err, salt) => {
             if (err) {
                 cb(err);
             } else {
-               bcrypt.hash(password, salt, (err,hash)=> {
+                bcrypt.hash(password, salt, (err,hash)=> {
                    if(err){
-                       console.log(err)
+                       cb(err)
                    }else{
-                        dbConnection.query(`INSERT INTO users (email, encrypted_password) VALUES (${email}, ${hash});`, (err, res) => {
+                        console.log('talking from just b4 insert', email, password, hash);
+                        dbConnection.query(`INSERT INTO users (email, encrypted_password) VALUES ($1, $2);`, [email, hash], (err, res) => {
                             if (err) {
                                 cb(err);
                             } else {
-                                cb(null, res.rows);
+                                cb(null, res.rowCount); //redirect to log in
                             }
                         });
                    }
