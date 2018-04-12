@@ -3,7 +3,8 @@ const {
   loginHandler,
   signupHandler,
   viewallHandler,
-  logoutHandler
+  logoutHandler,
+  postCommentHandler
 } = require('./handler');
 const fs = require('fs');
 
@@ -16,10 +17,12 @@ const router = (request, response) => {
   } else if (url === '/login') {
     loginHandler(request, response);
   } else if (url.indexOf('/signup') !== -1) {
-      console.log('url', url);
+    console.log('url', url);
     signupHandler(request, response);
   } else if (url.indexOf('/logout') !== -1) {
     logoutHandler(request, response);
+  } else if (url.indexOf('/comment') !== -1) {
+    postCommentHandler(request, response);
   } else if (url.indexOf('/viewall') !== -1) {
     viewallHandler(request, response);
   } else {
