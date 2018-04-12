@@ -78,7 +78,6 @@ const signupHandler = (request, response) => {
             }
         });
     });
-  });
 };
 
 const logoutHandler = (request, response) => {
