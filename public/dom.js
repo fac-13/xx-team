@@ -12,7 +12,7 @@ newUser.addEventListener('click', function () {
 
 // Set custom validity message for singup password 
 password.addEventListener("input", function (event) {
-    if (!password.validity.valid) {
+    if (password.validity.patternMismatch) {
         password.setCustomValidity("Password must contain 1 uppercase letter, a number or special character and be at least 8 characters long");
     } else {
         password.setCustomValidity("");
@@ -21,7 +21,7 @@ password.addEventListener("input", function (event) {
 
 // Ensure that password and confirm passwords match
 confirmPassword.addEventListener("input", function (event) {
-    if (!confirmPassword.validity.valid) {
+    if (confirmPassword.validity.patternMismatch) {
         confirmPassword.setCustomValidity("Password must contain 1 uppercase letter, a number or special character and be at least 8 characters long");
     } else if (confirmPassword.value !== password.value) {
         confirmPassword.setCustomValidity("Passwords must match");
