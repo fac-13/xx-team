@@ -5,6 +5,6 @@ const server = http.createServer(router);
 const port = process.env.PORT || 3000;
 const host = process.env.HOST || 'localhost';
 
-server.listen(port, function() {
+server.listen(port, () => {
   console.log(`The server is running: http://${host}:${port}`);
-})
+});
