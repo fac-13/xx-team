@@ -7,12 +7,12 @@ var newUser = document.querySelector('#new-user');
 var password = document.querySelector('#password');
 var confirmPassword = document.querySelector('#confirm-password');
 var commentBtn = document.getElementById('comment-btn');
+var posts = document.getElementById('posts');
 
 var makeRequest = function (url, method, data, callback) {
   const xhr = new XMLHttpRequest();
   xhr.addEventListener('load', function () {
     if (xhr.status == 200) {
-      console.log('xhr', xhr.responseText)
       const response = xhr.responseText;
       return callback(null, response);
     } else {
@@ -51,17 +51,18 @@ function displayPosts(err, data) {
     article.appendChild(p);
     article.appendChild(author);
     article.appendChild(timestamp);
-    document.getElementById('posts').appendChild(article);
+    posts.appendChild(article);
   });
 }
 
 commentBtn.addEventListener('click', function () {
+  while (posts.firstChild) posts.removeChild(posts.firstChild);
   data = document.getElementById('post-comment').value;
   makeRequest('/comment', 'post', data, updatePosts);
 });
 
 function updatePosts(data) {
-  console.log('DATA', data);
+  makeRequest('/viewall', 'get', null, displayPosts);
 }
 
 function handleError() {
