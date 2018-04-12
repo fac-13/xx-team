@@ -4,6 +4,7 @@ require('env2')('./config.env');
 const querystring = require('querystring');
 const { getAllPosts } = require('./queries/getalldata');
 const { signup } = require('./queries/signup');
+const { postComment } = require('./queries/postcomment');
 const secret = process.env.SECRET;
 
 const staticHandler = (response, filepath) => {
@@ -32,50 +33,71 @@ const loginHandler = (request, response) => {
 };
 
 const signupHandler = (request, response) => {
-    let data = '';
-    request.on('data', function (chunk) {
-        data += chunk;
+  let data = '';
+  request.on('data', (chunk) => {
+    data += chunk;
+  });
+  request.on('end', () => {
+    const registerData = querystring.parse(data);
+    const email = registerData.email;
+    const password = registerData.password;
+    signup(email, password, (err, res) => {
+      if (err) {
+        response.writeHead(500, { 'content-type': 'text/html' });
+        response.end('<h1>Failed to sign the user, try again</h1>');
+      } else {
+        const numUsers = res;
+        response.writeHead(200, { 'content-type': 'text/html' });
+        response.end(`<h1>Registered ${numUsers} new users.</h1>`);
+      }
     });
-    request.on('end', () => {
-        const registerData = querystring.parse(data);
-        const email = registerData.email;
-        const password = registerData.password;
-        signup(email, password, (err, res) => {
-            if(err){
-                response.writeHead(500, { 'content-type': 'text/html' });
-                response.end('<h1>Failed to sign the user, try again</h1>');
-            }else{
-                const numUsers = res;
-                response.writeHead(200, { 'content-type': 'text/html' });
-                response.end(`<h1>Registered ${numUsers} new users.</h1>`);
-            }
-        });
-    });
+  });
 };
 
 const logoutHandler = (request, response) => {
   console.log('LOGOUT URL', request.url);
 };
 
-const viewallHandler = (request, response) => {
-    getAllPosts((err, res) => {
+const postCommentHandler = (request, response) => {
+  let data = '';
+  request.on('data', (chunk) => {
+    data += chunk;
+  });
+  request.on('end', () => {
+    postComment(data, (err, res) => {
       if (err) {
-        response.writeHead(500, "Content-Type:text/html");
-        response.end("<h1>Sorry, there was a problem getting the posts from the server. Try again later.</h1>");
+        response.writeHead(500, { 'content-type': 'text/html' });
+        response.end("<h1>Sorry, your post wasn't saved!</h1>");
       } else {
-        let output = JSON.stringify(res);
-        response.writeHead(200, {
-          "content-type": "application/json"
-        });
-        response.end(output);
+        response.writeHead(200, { 'content-type': 'text/plain' });
+        response.end('Posted your comment.');
       }
     });
-  };
+  });
+};
+
+const viewallHandler = (request, response) => {
+  getAllPosts((err, res) => {
+    if (err) {
+      response.writeHead(500, 'Content-Type:text/html');
+      response.end(
+        '<h1>Sorry, there was a problem getting the posts from the server. Try again later.</h1>'
+      );
+    } else {
+      let output = JSON.stringify(res);
+      response.writeHead(200, {
+        'content-type': 'application/json'
+      });
+      response.end(output);
+    }
+  });
+};
 
 module.exports = {
   staticHandler,
   loginHandler,
   signupHandler,
   viewallHandler,
-  logoutHandler
+  logoutHandler,
+  postCommentHandler,
 };

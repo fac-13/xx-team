@@ -1,39 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="public/style.css">
-    <title>Document</title>
-  </head>
-  <body>
-    <dialog id="signup" role="dialog" open>
-        <form id="signup-form" action='/signup' method='post'>
-        <label for="email">Email:</label>
-        <input id="email" name="email" type="email" required/>
-        <label for="password">Password:</label>
-        <input id="password" name="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Password must contain 1 uppercase letter, a number or special character and be at least 8 characters long" required/>
-        <label for="confirm-password">Confirm Password:</label>
-        <input id="confirm-password" name="confirm-password"  pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$" required />
-        <button  id="signup-btn">Sign Up!</button>
-        </form>
-        <button id="has-account">Have an account? Click here.</button>
-    </dialog>
-    <dialog id="login" role="dialog">
-      <form id="login-form">
-        <label for="login-email">Email:</label>
-        <input id="login-email" name="email" required/>
-        <label for="login-password">Password:</label>
-        <input id="login-password" name="password" type="password" required/>
-        <button type="button" id="login-btn">Log in</button>
-      </form>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="public/style.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <dialog id="signup" role="dialog">
+    <form id="signup-form" action='/signup' method='post'>
+      <label for="email">Email:</label>
+      <input id="email" name="email" type="email" required/>
+      <label for="password">Password:</label>
+      <input id="password" name="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Password must contain 1 uppercase letter, a number or special character and be at least 8 characters long"
+        required/>
+      <label for="confirm-password">Confirm Password:</label>
+      <input id="confirm-password" name="confirm-password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+        required />
+      <button id="signup-btn">Sign Up!</button>
+    </form>
+    <button id="has-account">Have an account? Click here.</button>
+  </dialog>
+  <dialog id="login" role="dialog">
+    <form id="login-form">
+      <label for="login-email">Email:</label>
+      <input id="login-email" name="email" required/>
+      <label for="login-password">Password:</label>
+      <input id="login-password" name="password" type="password" required/>
+      <button type="button" id="login-btn">Log in</button>
+    </form>
     <button id="new-user">Click to Sign up!</button>
-    </dialog>
+  </dialog>
+  <section>
+    <form id="comment-form">
+      <label for="post-comment">Speak your mind:</label>
+      <textarea id="post-comment" name="comment" required/></textarea>
+      <button type="button" id="comment-btn">Publish</button>
+    </form>
+  </section>
+  <section id="posts">
+  </section>
 
-    <section id="posts">
-    </section>
+  <script src="public/dom.js"></script>
+</body>
 
-    <script src="public/dom.js"></script>
-  </body>
 </html>
