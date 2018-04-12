@@ -33,7 +33,7 @@ function displayPosts(err, data) {
   data = JSON.parse(data);
   if (err) console.log(err);
 
-  data.forEach(post => {
+  data.forEach(function (post) {
     var article = document.createElement('article');
     article.className = 'post';
     var p = document.createElement('p');
