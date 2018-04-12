@@ -12,22 +12,22 @@ newUser.addEventListener('click', function () {
     signUp.setAttribute('open', 'true');
 })
 
-// Set custom validity message for singup password 
+// Set custom validity message for signup password 
 password.addEventListener("input", function (event) {
-    if (!/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$/.test(password.value)) {
+    if (password.validity.patternMismatch) {
         password.setCustomValidity("Password must contain 1 uppercase letter, a number or special character and be at least 8 characters long");
     } else {
         password.setCustomValidity("");
     }
 });
 
-function checkPasswords(event) {
-    event.preventDefault();
-    if (confirmPassword.value !== password.value) {
-        confirmPassword.setCustomValidity("Passwords must match");
-    }
-}
 // Ensure that password and confirm passwords match
-signupBtn.addEventListener("submit", checkPasswords); 
-
-
+confirmPassword.addEventListener("input", function (event) {
+    if (confirmPassword.validity.patternMismatch) {
+        confirmPassword.setCustomValidity("Password must contain 1 uppercase letter, a number or special character and be at least 8 characters long");
+    } else if (confirmPassword.value !== password.value) {
+        confirmPassword.setCustomValidity("Passwords must match");
+    } else {
+        confirmPassword.setCustomValidity("");
+    }
+});
