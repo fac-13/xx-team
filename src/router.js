@@ -16,6 +16,7 @@ const router = (request, response) => {
   } else if (url === '/login') {
     loginHandler(request, response);
   } else if (url.indexOf('/signup') !== -1) {
+      console.log('url', url);
     signupHandler(request, response);
   } else if (url.indexOf('/logout') !== -1) {
     logoutHandler(request, response);

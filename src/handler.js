@@ -1,6 +1,10 @@
 const fs = require('fs');
 const path = require('path');
+require('env2')('./config.env');
 const querystring = require('querystring');
+const { getAllPosts } = require('./queries/getalldata');
+const { signup } = require('./queries/signup');
+const secret = process.env.SECRET;
 
 const staticHandler = (response, filepath) => {
   const extension = filepath.split('.')[1];
@@ -28,7 +32,25 @@ const loginHandler = (request, response) => {
 };
 
 const signupHandler = (request, response) => {
-  console.log('SIGNUP URL', request.url);
+    let data = '';
+    request.on('data', function (chunk) {
+        data += chunk;
+    });
+    request.on('end', () => {
+        const registerData = querystring.parse(data);
+        const email = registerData.email;
+        const password = registerData.password;
+        signup(email, password, (err, res) => {
+            if(err){
+                response.writeHead(500, { 'content-type': 'text/html' });
+                response.end('<h1>Failed to sign the user, try again</h1>');
+            }else{
+                const numUsers = res;
+                response.writeHead(200, { 'content-type': 'text/html' });
+                response.end(`<h1>Registered ${numUsers} new users.</h1>`);
+            }
+        });
+    });
 };
 
 const logoutHandler = (request, response) => {
@@ -36,8 +58,19 @@ const logoutHandler = (request, response) => {
 };
 
 const viewallHandler = (request, response) => {
-  console.log('VIEW ALL', request.url);
-};
+    getAllPosts((err, res) => {
+      if (err) {
+        response.writeHead(500, "Content-Type:text/html");
+        response.end("<h1>Sorry, there was a problem getting the posts from the server. Try again later.</h1>");
+      } else {
+        let output = JSON.stringify(res);
+        response.writeHead(200, {
+          "content-type": "application/json"
+        });
+        response.end(output);
+      }
+    });
+  };
 
 module.exports = {
   staticHandler,

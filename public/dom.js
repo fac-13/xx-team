@@ -1,8 +1,10 @@
 var loginBtn = document.querySelector('#login-btn');
+var signupBtn = document.querySelector('#signup-btn')
 var signUp = document.querySelector('#signup');
 var newUser = document.querySelector('#new-user');
 var password = document.querySelector('#password');
 var confirmPassword = document.querySelector('#confirm-password');
+
 
 // Show the correct dialog
 newUser.addEventListener('click', function () {
@@ -10,7 +12,7 @@ newUser.addEventListener('click', function () {
     signUp.setAttribute('open', 'true');
 })
 
-// Set custom validity message for singup password 
+// Set custom validity message for signup password 
 password.addEventListener("input", function (event) {
     if (password.validity.patternMismatch) {
         password.setCustomValidity("Password must contain 1 uppercase letter, a number or special character and be at least 8 characters long");
