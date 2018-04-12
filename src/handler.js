@@ -7,6 +7,8 @@ const { signup } = require('./queries/signup');
 const { postComment } = require('./queries/postcomment');
 const secret = process.env.SECRET;
 const { checkPassword } = require('./queries/checkpassword');
+const { parse } = require('cookie');
+const { sign, verify } = require('jsonwebtoken');
 
 const staticHandler = (response, filepath) => {
   const extension = filepath.split('.')[1];
@@ -30,48 +32,52 @@ const staticHandler = (response, filepath) => {
 };
 
 const loginHandler = (request, response) => {
-  console.log(response);
   let data = '';
   request.on('data', function (chunk) {
     data += chunk;
   });
   request.on('end', () => {
-    const registerData = querystring.parse(data);
-    const email = registerData.email;
-    const password = registerData.password;
-    checkPassword(email, password, (err, res) => {
-      if (err) {
-        response.writeHead(500, { 'content-type': 'text/html' });
-        response.end('<h1>Failed to login the user, try again</h1>');
-      } else {
-        const numUsers = res;
-        response.writeHead(302, { 'content-type': 'text/html', 'Location': '/' });
-        response.end(`<h1>Registered ${numUsers} new users.</h1>`);
-      }
-    });
+      const registerData = querystring.parse(data);
+      const email = registerData.email;
+      const password = registerData.password;
+      checkPassword(email, password, (err, res) => {
+          if(err){
+              response.writeHead(500, { 'content-type': 'text/html' });
+              response.end('<h1>Failed to login the user, try again</h1>');
+          }else{
+            let token = sign({'logged-in' : 'true', 'email' : `${email}`}, secret);
+            response.writeHead(302, {
+              "Content-Type": "text/html", "location": "/", 'Set-Cookie' : `token = ${token}; HttpOnly; Max-Age=9000;`
+            });
+            response.end();
+          }
+      });
   });
 };
 
+
 const signupHandler = (request, response) => {
-  let data = '';
-  request.on('data', function (chunk) {
-    data += chunk;
-  });
-  request.on('end', () => {
-    const registerData = querystring.parse(data);
-    const email = registerData.email;
-    const password = registerData.password;
-    signup(email, password, (err, res) => {
-      if (err) {
-        response.writeHead(500, { 'content-type': 'text/html' });
-        response.end('<h1>Failed to sign the user, try again</h1>');
-      } else {
-        const numUsers = res;
-        response.writeHead(302, { 'content-type': 'text/html', 'Location': '/' });
-        response.end(`<h1>Registered ${numUsers} new users.</h1>`);
-      }
+    let data = '';
+    request.on('data', function (chunk) {
+        data += chunk;
     });
-  });
+    request.on('end', () => {
+        const registerData = querystring.parse(data);
+        const email = registerData.email;
+        const password = registerData.password;
+        signup(email, password, (err, res) => {
+            if(err){
+                response.writeHead(500, { 'content-type': 'text/html' });
+                response.end('<h1>Failed to sign the user, try again</h1>');
+            }else{
+              let token = sign({'logged-in' : 'true', 'email' : `${email}`}, secret);
+              response.writeHead(302, {
+                "Content-Type": "text/html", "location": "/", 'Set-Cookie' : `token = ${token}; HttpOnly; Max-Age=9000;`
+              });
+              response.end();
+            }
+        });
+    });
 };
 
 const logoutHandler = (request, response) => {
