@@ -8,8 +8,7 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="overlay"></div>
-    <dialog id="signup" role="dialog">
+    <dialog id="signup" role="dialog" open>
         <form id="signup-form" action='/signup' method='post'>
         <label for="email">Email:</label>
         <input id="email" name="email" type="email" required/>
@@ -19,6 +18,7 @@
         <input id="confirm-password" name="confirm-password"  pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$" required />
         <button  id="signup-btn">Sign Up!</button>
         </form>
+        <button id="has-account">Have an account? Click here.</button>
     </dialog>
     <dialog id="login" role="dialog" open>
       <form id="login-form" action='/login' method='post'>
@@ -30,6 +30,10 @@
       </form>
     <button id="new-user">Click to Sign up!</button>
     </dialog>
+
+    <section id="posts">
+    </section>
+
     <script src="public/dom.js"></script>
   </body>
 </html>
