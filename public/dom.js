@@ -26,6 +26,6 @@ confirmPassword.addEventListener("input", function (event) {
     } else if (confirmPassword.value !== password.value) {
         confirmPassword.setCustomValidity("Passwords must match");
     } else {
-        password.setCustomValidity("");
+        confirmPassword.setCustomValidity("");
     }
 });

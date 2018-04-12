@@ -12,11 +12,11 @@
     <dialog id="signup" role="dialog">
       <form id="signup-form">
         <label for="email">Email:</label>
-        <input id="email" name="email" required/>
+        <input id="email" name="email" type="email" required/>
         <label for="password">Password:</label>
         <input id="password" name="password" type="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Password must contain 1 uppercase letter, a number or special character and be at least 8 characters long" required/>
         <label for="confirm-password">Confirm Password:</label>
-        <input id="confirm-password" name="confirm-password" type="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$" required />
+        <input id="confirm-password" name="confirm-password" type="password"  pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![\n])(?=.*[A-Z])(?=.*[a-z]).*$" required />
         <button  id="signup-btn">Sign Up!</button>
       </form>
     </dialog>
