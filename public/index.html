@@ -25,14 +25,16 @@
     <button id="has-account">Have an account? Click here.</button>
   </dialog>
   <dialog id="login" role="dialog" open>
-    <form id="login-form">
+    <form id="login-form" action="/login" method="post">
       <label for="login-email">Email:</label>
       <input id="login-email" name="email" required/>
       <label for="login-password">Password:</label>
       <input id="login-password" name="password" type="password" required/>
-      <button type="button" id="login-btn">Log in</button>
+      <button id="login-btn">Log in</button>
     </form>
     <button id="new-user">Click to Sign up!</button>
+    <button id="logout">Log out</button>
+    
   </dialog>
   <section>
     <form id="comment-form">

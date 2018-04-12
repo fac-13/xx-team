@@ -24,5 +24,8 @@
     "env2": "^2.2.0",
     "jsonwebtoken": "^8.2.1",
     "pg": "^7.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
   }
 }
