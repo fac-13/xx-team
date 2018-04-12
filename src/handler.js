@@ -6,6 +6,8 @@ const { getAllPosts } = require('./queries/getalldata');
 const { signup } = require('./queries/signup');
 const secret = process.env.SECRET;
 const { checkPassword } = require('./queries/checkpassword');
+const { parse } = require('cookie');
+const { sign, verify } = require('jsonwebtoken');
 
 const staticHandler = (response, filepath) => {
   const extension = filepath.split('.')[1];
@@ -29,7 +31,6 @@ const staticHandler = (response, filepath) => {
 };
 
 const loginHandler = (request, response) => {
-  console.log(response);
   let data = '';
   request.on('data', function (chunk) {
       data += chunk;
@@ -43,13 +44,16 @@ const loginHandler = (request, response) => {
               response.writeHead(500, { 'content-type': 'text/html' });
               response.end('<h1>Failed to login the user, try again</h1>');
           }else{
-              const numUsers = res;
-              response.writeHead(302, { 'content-type': 'text/html', 'Location': '/' });
-              response.end(`<h1>Registered ${numUsers} new users.</h1>`);
+            let token = sign({'logged-in' : 'true', 'email' : `${email}`}, secret);
+            response.writeHead(302, {
+              "Content-Type": "text/html", "location": "/", 'Set-Cookie' : `token = ${token}; HttpOnly; Max-Age=9000;`
+            });
+            response.end();
           }
       });
   });
 };
+
 
 const signupHandler = (request, response) => {
     let data = '';
@@ -65,9 +69,11 @@ const signupHandler = (request, response) => {
                 response.writeHead(500, { 'content-type': 'text/html' });
                 response.end('<h1>Failed to sign the user, try again</h1>');
             }else{
-                const numUsers = res;
-                response.writeHead(302, { 'content-type': 'text/html', 'Location': '/' });
-                response.end(`<h1>Registered ${numUsers} new users.</h1>`);
+              let token = sign({'logged-in' : 'true', 'email' : `${email}`}, secret);
+              response.writeHead(302, {
+                "Content-Type": "text/html", "location": "/", 'Set-Cookie' : `token = ${token}; HttpOnly; Max-Age=9000;`
+              });
+              response.end();
             }
         });
     });
