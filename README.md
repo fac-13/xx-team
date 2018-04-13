@@ -12,8 +12,8 @@ You can then submit posts from your account.
 
 ##Setting up the environment
 
-Clone the repository
+Clone the repository. Then enter it with the cd command.
 ```
-$ git@github.com:fac-13/xx-team.git
+$ git clone git@github.com:fac-13/xx-team.git
 $ cd xx-team
 ```
