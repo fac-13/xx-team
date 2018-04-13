@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 var loginBtn = document.querySelector('#login-btn');
 var signupBtn = document.querySelector('#signup-btn');
 var signUp = document.querySelector('#signup');
@@ -9,6 +8,7 @@ var confirmPassword = document.querySelector('#confirm-password');
 var commentBtn = document.getElementById('comment-btn');
 var login = document.getElementById('login');
 var hasAccount = document.getElementById('has-account');
+var posts = document.getElementById('posts');
 
 var makeRequest = function (url, method, data, callback) {
   const xhr = new XMLHttpRequest();
@@ -34,7 +34,7 @@ function displayPosts(err, data) {
   data = JSON.parse(data);
   if (err) console.log(err);
 
-  data.forEach(post => {
+  data.forEach(function (post) {
     var article = document.createElement('article');
     article.className = 'post';
     var p = document.createElement('p');
@@ -52,16 +52,19 @@ function displayPosts(err, data) {
     article.appendChild(p);
     article.appendChild(author);
     article.appendChild(date);
-    document.getElementById('posts').appendChild(article);
+    posts.appendChild(article);
   });
 }
 
-commentBtn.addEventListener('click', function () {
+commentBtn.addEventListener('click', function (e) {
+  e.preventDefault();
+  while (posts.firstChild) posts.removeChild(posts.firstChild);
   data = document.getElementById('post-comment').value;
   makeRequest('/comment', 'post', data, updatePosts);
 });
 
 function updatePosts(data) {
+  makeRequest('/viewall', 'get', null, displayPosts);
 }
 
 function handleError() {
