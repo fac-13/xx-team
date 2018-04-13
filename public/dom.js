@@ -69,7 +69,7 @@ function updatePosts(data) {
 }
 
 function showEmail(data) {
-  var email = document.createElement('h2');
+  var email = document.createElement('h3');
   var emailText = document.createTextNode('You are logged in as: ' + data);
   email.appendChild(emailText);
   emaildisplay.appendChild(email);
