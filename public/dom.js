@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 var loginBtn = document.querySelector('#login-btn');
 var signupBtn = document.querySelector('#signup-btn');
 var signUp = document.querySelector('#signup');
@@ -7,6 +6,8 @@ var newUser = document.querySelector('#new-user');
 var password = document.querySelector('#password');
 var confirmPassword = document.querySelector('#confirm-password');
 var commentBtn = document.getElementById('comment-btn');
+var login = document.getElementById('login');
+var hasAccount = document.getElementById('has-account');
 var posts = document.getElementById('posts');
 
 var makeRequest = function (url, method, data, callback) {
@@ -40,7 +41,7 @@ function displayPosts(err, data) {
     var text = document.createTextNode(post.comment);
     var author = document.createElement('span');
     author.className = 'author';
-    var email = document.createTextNode(post.email);
+    var email = document.createTextNode('Written by: ' + post.email);
     var date = document.createElement('span');
     date.className = 'date';
     var timestamp = document.createTextNode('2018-05-15');
@@ -50,12 +51,13 @@ function displayPosts(err, data) {
     date.appendChild(timestamp);
     article.appendChild(p);
     article.appendChild(author);
-    article.appendChild(timestamp);
+    article.appendChild(date);
     posts.appendChild(article);
   });
 }
 
-commentBtn.addEventListener('click', function () {
+commentBtn.addEventListener('click', function (e) {
+  e.preventDefault();
   while (posts.firstChild) posts.removeChild(posts.firstChild);
   data = document.getElementById('post-comment').value;
   makeRequest('/comment', 'post', data, updatePosts);
@@ -73,6 +75,11 @@ function handleError() {
 newUser.addEventListener('click', () => {
   login.removeAttribute('open');
   signUp.setAttribute('open', 'true');
+});
+
+hasAccount.addEventListener('click', function() {
+  login.setAttribute('open', 'true');
+  signUp.removeAttribute('open');
 });
 
 // Set custom validity message for signup password
@@ -98,7 +105,6 @@ confirmPassword.addEventListener('input', event => {
     confirmPassword.setCustomValidity('');
   }
 });
-
 
 document.getElementById('logout').addEventListener('click', function() {
   makeRequest('/logout', 'GET', '', function() {});
