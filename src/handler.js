@@ -37,53 +37,53 @@ const loginHandler = (request, response) => {
     data += chunk;
   });
   request.on('end', () => {
-      const registerData = querystring.parse(data);
-      const email = registerData.email;
-      const password = registerData.password;
-      checkPassword(email, password, (err, res) => {
-          if(err){
-              response.writeHead(500, { 'content-type': 'text/html' });
-              response.end('<h1>Failed to login the user, try again</h1>');
-          }else{
-            let token = sign({'logged-in' : 'true', 'email' : `${email}`}, secret);
-            response.writeHead(302, {
-              "Content-Type": "text/html", "location": "/", 'Set-Cookie' : `token = ${token}; HttpOnly; Max-Age=9000;`
-            });
-            response.end();
-          }
-      });
+    const registerData = querystring.parse(data);
+    const email = registerData.email;
+    const password = registerData.password;
+    checkPassword(email, password, (err, res) => {
+      if (err) {
+        response.writeHead(500, { 'content-type': 'text/html' });
+        response.end('<h1>Failed to login the user, try again</h1>');
+      } else {
+        let token = sign({ 'logged-in': 'true', 'email': `${email}` }, secret);
+        response.writeHead(302, {
+          "Content-Type": "text/html", "location": "/", 'Set-Cookie': `'token = ${token}; HttpOnly; Max-Age=9000;`
+        });
+        response.end();
+      }
+    });
   });
 };
 
 
 const signupHandler = (request, response) => {
-    let data = '';
-    request.on('data', function (chunk) {
-        data += chunk;
-    });
-    request.on('end', () => {
-        const registerData = querystring.parse(data);
-        const email = registerData.email;
-        const password = registerData.password;
-        signup(email, password, (err, res) => {
-            if(err){
-                response.writeHead(500, { 'content-type': 'text/html' });
-                response.end('<h1>Failed to sign the user, try again</h1>');
-            }else{
-              let token = sign({'logged-in' : 'true', 'email' : `${email}`}, secret);
-              response.writeHead(302, {
-                "Content-Type": "text/html", "location": "/", 'Set-Cookie' : `token = ${token}; HttpOnly; Max-Age=9000;`
-              });
-              response.end();
-            }
+  let data = '';
+  request.on('data', function (chunk) {
+    data += chunk;
+  });
+  request.on('end', () => {
+    const registerData = querystring.parse(data);
+    const email = registerData.email;
+    const password = registerData.password;
+    signup(email, password, (err, res) => {
+      if (err) {
+        response.writeHead(500, { 'content-type': 'text/html' });
+        response.end('<h1>Failed to sign the user, try again</h1>');
+      } else {
+        let token = sign({ 'logged-in': 'true', 'email': `${email}` }, secret);
+        response.writeHead(302, {
+          "Content-Type": "text/html", "location": "/", 'Set-Cookie': `token = ${token}; HttpOnly; Max-Age=9000;`
         });
+        response.end();
+      }
     });
+  });
 };
 
 const logoutHandler = (request, response) => {
   response.writeHead(302, {
     'Set-Cookie': 'token=false; Max-Age=0;',
-    'Location' : '/'
+    'Location': '/',
   });
   return response.end();
 };
@@ -116,9 +116,24 @@ const viewallHandler = (request, response) => {
     } else {
       let output = JSON.stringify(res);
       response.writeHead(200, {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
       });
       response.end(output);
+    }
+  });
+};
+
+const validateHandler = (request, response) => {
+  const jwt = parse(request.headers.cookie).token;
+  return verify(jwt, secret, (err, res) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const email = res.email;
+      response.writeHead(200, {
+        'Content-Type': 'text/plain',
+      });
+      return response.end(email);
     }
   });
 };
@@ -130,4 +145,5 @@ module.exports = {
   viewallHandler,
   logoutHandler,
   postCommentHandler,
+  validateHandler,
 };

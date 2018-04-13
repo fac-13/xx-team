@@ -4,7 +4,8 @@ const {
   signupHandler,
   viewallHandler,
   logoutHandler,
-  postCommentHandler
+  postCommentHandler,
+  validateHandler,
 } = require('./handler');
 const fs = require('fs');
 
@@ -23,6 +24,8 @@ const router = (request, response) => {
     logoutHandler(request, response);
   } else if (url.indexOf('/comment') !== -1) {
     postCommentHandler(request, response);
+  } else if (url.indexOf('/validate') !== -1) {
+    validateHandler(request, response);
   } else if (url.indexOf('/viewall') !== -1) {
     viewallHandler(request, response);
   } else {
