@@ -17,3 +17,11 @@ Clone the repository. Then enter it with the cd command.
 $ git clone git@github.com:fac-13/xx-team.git
 $ cd xx-team
 ```
+Use `npm` to install dependencies
+```
+$ npm install
+```
+or
+```
+$ npm i
+```
