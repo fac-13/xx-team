@@ -8,6 +8,7 @@ var password = document.querySelector('#password');
 var confirmPassword = document.querySelector('#confirm-password');
 var commentBtn = document.getElementById('comment-btn');
 var posts = document.getElementById('posts');
+var emaildisplay = document.getElementById('showemail');
 
 var makeRequest = function (url, method, data, callback) {
   const xhr = new XMLHttpRequest();
@@ -65,6 +66,25 @@ function updatePosts(data) {
   makeRequest('/viewall', 'get', null, displayPosts);
 }
 
+function showEmail(data) {
+  var email = document.createElement('h2');
+  var emailText = document.createTextNode('You are logged in as: ' + data);
+  email.appendChild(emailText);
+  emaildisplay.appendChild(email);
+  document.getElementById('login').removeAttribute('open');
+  document.getElementById('signup').removeAttribute('open');
+}
+
+function getEmail(e) {
+  e.preventDefault();
+  makeRequest('/validate', 'get', null, function (err, email) {
+    showEmail(email);
+  });
+}
+
+loginBtn.addEventListener('click', getEmail);
+
+
 function handleError() {
   console.log('error');
 }
@@ -100,6 +120,6 @@ confirmPassword.addEventListener('input', event => {
 });
 
 
-document.getElementById('logout').addEventListener('click', function() {
-  makeRequest('/logout', 'GET', '', function() {});
+document.getElementById('logout').addEventListener('click', function () {
+  makeRequest('/logout', 'GET', '', function () { });
 });
