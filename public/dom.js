@@ -12,7 +12,6 @@ var makeRequest = function (url, method, data, callback) {
   const xhr = new XMLHttpRequest();
   xhr.addEventListener('load', function () {
     if (xhr.status == 200) {
-      console.log('xhr', xhr.responseText)
       const response = xhr.responseText;
       return callback(null, response);
     } else {
@@ -61,7 +60,6 @@ commentBtn.addEventListener('click', function () {
 });
 
 function updatePosts(data) {
-  console.log('DATA', data);
 }
 
 function handleError() {
@@ -96,4 +94,9 @@ confirmPassword.addEventListener('input', event => {
   } else {
     confirmPassword.setCustomValidity('');
   }
+});
+
+
+document.getElementById('logout').addEventListener('click', function() {
+  makeRequest('/logout', 'GET', '', function() {});
 });
