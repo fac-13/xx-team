@@ -39,7 +39,7 @@ function displayPosts(err, data) {
     var text = document.createTextNode(post.comment);
     var author = document.createElement('span');
     author.className = 'author';
-    var email = document.createTextNode(post.email);
+    var email = document.createTextNode('Written by: ' + post.email);
     var date = document.createElement('span');
     date.className = 'date';
     var timestamp = document.createTextNode('2018-05-15');
@@ -49,7 +49,7 @@ function displayPosts(err, data) {
     date.appendChild(timestamp);
     article.appendChild(p);
     article.appendChild(author);
-    article.appendChild(timestamp);
+    article.appendChild(date);
     document.getElementById('posts').appendChild(article);
   });
 }
