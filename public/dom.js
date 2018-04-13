@@ -98,3 +98,8 @@ confirmPassword.addEventListener('input', event => {
     confirmPassword.setCustomValidity('');
   }
 });
+
+
+document.getElementById('logout').addEventListener('click', function() {
+  makeRequest('/logout', 'GET', '', function() {});
+});

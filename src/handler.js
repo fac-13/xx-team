@@ -81,7 +81,11 @@ const signupHandler = (request, response) => {
 };
 
 const logoutHandler = (request, response) => {
-  console.log('LOGOUT URL', request.url);
+  response.writeHead(302, {
+    'Set-Cookie': 'token=false; Max-Age=0;',
+    'Location' : '/'
+  });
+  return response.end();
 };
 
 const postCommentHandler = (request, response) => {
