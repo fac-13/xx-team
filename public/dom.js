@@ -7,6 +7,8 @@ var newUser = document.querySelector('#new-user');
 var password = document.querySelector('#password');
 var confirmPassword = document.querySelector('#confirm-password');
 var commentBtn = document.getElementById('comment-btn');
+var login = document.getElementById('login');
+var hasAccount = document.getElementById('has-account');
 
 var makeRequest = function (url, method, data, callback) {
   const xhr = new XMLHttpRequest();
@@ -72,6 +74,11 @@ newUser.addEventListener('click', () => {
   signUp.setAttribute('open', 'true');
 });
 
+hasAccount.addEventListener('click', function() {
+  login.setAttribute('open', 'true');
+  signUp.removeAttribute('open');
+});
+
 // Set custom validity message for signup password
 password.addEventListener('input', event => {
   if (password.validity.patternMismatch) {
@@ -95,7 +102,6 @@ confirmPassword.addEventListener('input', event => {
     confirmPassword.setCustomValidity('');
   }
 });
-
 
 document.getElementById('logout').addEventListener('click', function() {
   makeRequest('/logout', 'GET', '', function() {});
